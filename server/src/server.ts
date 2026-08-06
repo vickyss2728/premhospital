@@ -84,23 +84,27 @@ const seedDatabase = async () => {
   }
 };
 
-// Start Server
-const startServer = async () => {
-  // Connect database
+import mongoose from 'mongoose';
+
+// Connect database and seed
+const initDB = async () => {
   await connectDB();
-  
-  // Seed Database if connected
   const isDBConnected = mongoose.connection.readyState === 1;
   if (isDBConnected) {
     await seedDatabase();
   } else {
     console.log('⚠️ Database offline: Seeding skipped. Server will run on mock fallback mode.');
   }
+};
 
+initDB();
+
+// Only listen when running locally, not in serverless Vercel
+if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`⚡ Clinical API Server is running on port ${PORT}`);
   });
-};
+}
 
-import mongoose from 'mongoose';
-startServer();
+export default app;
+

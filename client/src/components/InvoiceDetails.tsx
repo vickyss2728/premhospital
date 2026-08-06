@@ -3,7 +3,7 @@ import { ArrowLeft, Printer, Edit3, Heart } from 'lucide-react';
 import type { Invoice } from '../data/mockData';
 
 /**
- * EXPLANATION: UI Separation and Print Layout Integration
+ * EXPLANATION: UI Separation and Print Layout Integra
  * 
  * In standard web applications, interfaces are rich, colored, and animated.
  * However, physical printing requires a completely different format (usually
@@ -36,26 +36,26 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
       if (!AudioCtx) return;
       const ctx = new AudioCtx();
-      
+
       const osc1 = ctx.createOscillator();
       const osc2 = ctx.createOscillator();
       const gain1 = ctx.createGain();
       const gain2 = ctx.createGain();
-      
+
       osc1.type = 'sine';
       osc1.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
       gain1.gain.setValueAtTime(0.15, ctx.currentTime);
       gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
       osc1.connect(gain1);
       gain1.connect(ctx.destination);
-      
+
       osc2.type = 'sine';
       osc2.frequency.setValueAtTime(659.25, ctx.currentTime + 0.12); // E5
       gain2.gain.setValueAtTime(0.15, ctx.currentTime + 0.12);
       gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
       osc2.connect(gain2);
       gain2.connect(ctx.destination);
-      
+
       osc1.start();
       osc1.stop(ctx.currentTime + 0.15);
       osc2.start(ctx.currentTime + 0.12);
@@ -68,12 +68,12 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
   const handleSimulatePayment = () => {
     setIsProcessingPayment(true);
     setPaymentStep('processing');
-    
+
     // Simulate payment authorization
     setTimeout(() => {
       setPaymentStep('success');
       playSuccessChime();
-      
+
       // Auto-update status to paid after a short delay
       setTimeout(() => {
         if (onUpdateStatus) {
@@ -97,7 +97,7 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
 
   return (
     <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      
+
       {/* Control Actions Panel (Hidden during Printing) */}
       <div className="no-print" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <button className="btn btn-secondary" onClick={onBack}>
@@ -115,17 +115,17 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
 
       {/* Invoice Sheet */}
       <div className="glass-panel invoice-print-container" style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '32px', position: 'relative', overflow: 'hidden' }}>
-        
+
         {/* Transparent Large Status Watermark (Hidden/Styled differently in print) */}
-        <div 
+        <div
           className="no-print"
-          style={{ 
-            position: 'absolute', 
-            right: '40px', 
-            top: '160px', 
-            fontSize: '5rem', 
-            fontWeight: 900, 
-            opacity: 0.04, 
+          style={{
+            position: 'absolute',
+            right: '40px',
+            top: '160px',
+            fontSize: '5rem',
+            fontWeight: 900,
+            opacity: 0.04,
             textTransform: 'uppercase',
             transform: 'rotate(-12deg)',
             pointerEvents: 'none',
@@ -137,7 +137,7 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
 
         {/* Invoice Header */}
         <div className="invoice-print-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '24px', borderBottom: '1px solid var(--border-color)', paddingBottom: '24px' }}>
-          
+
           {/* Hospital Logo & Details */}
           <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
             <div style={{ padding: '12px', borderRadius: '12px', background: 'var(--grad-primary)', color: '#040813' }}>
@@ -170,7 +170,7 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
 
         {/* Patient & Insurance Breakdown */}
         <div className="invoice-print-details dashboard-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', flexWrap: 'wrap' }}>
-          
+
           {/* Patient Details */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <h4 style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -184,9 +184,9 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
               Age / Gender: {invoice.patientAge} years / {invoice.patientGender}
             </div>
             <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              Payment Method: <strong style={{ 
-                color: invoice.paymentMethod === 'Cash' ? '#10b981' : 
-                       invoice.paymentMethod === 'GPay' ? '#06b6d4' : 'var(--text-muted)'
+              Payment Method: <strong style={{
+                color: invoice.paymentMethod === 'Cash' ? '#10b981' :
+                  invoice.paymentMethod === 'GPay' ? '#06b6d4' : 'var(--text-muted)'
               }}>
                 {invoice.paymentMethod === 'Cash' && '💵 Cash'}
                 {invoice.paymentMethod === 'GPay' && '📱 GPay'}
@@ -201,8 +201,8 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
               Subsidies & Insurance:
             </h4>
             <div style={{ fontWeight: 700, fontSize: '1.1rem' }}>
-              {invoice.insuranceProvider && invoice.insuranceProvider !== 'None' 
-                ? invoice.insuranceProvider 
+              {invoice.insuranceProvider && invoice.insuranceProvider !== 'None'
+                ? invoice.insuranceProvider
                 : 'No Subsidy / Cash Account'}
             </div>
             {invoice.insuranceProvider && invoice.insuranceProvider !== 'None' ? (
@@ -262,18 +262,18 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
         </div>
 
         {/* Summary and Payment Layout Grid */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'flex-start', 
-          marginTop: '24px', 
-          flexWrap: 'wrap', 
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          marginTop: '24px',
+          flexWrap: 'wrap',
           gap: '24px',
           borderTop: '1px solid var(--border-color)',
           paddingTop: '20px',
           width: '100%'
         }}>
-             {/* Left Side: GPay Payment QR Code & Interactive Simulator */}
+          {/* Left Side: GPay Payment QR Code & Interactive Simulator */}
           {invoice.paymentMethod === 'GPay' ? (
             <div style={{
               display: 'flex',
@@ -291,7 +291,7 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
               <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#06b6d4' }}>
                 {invoice.status === 'paid' ? 'Paid via GPay / UPI' : 'Scan to Pay Balance'}
               </span>
-              
+
               {isProcessingPayment ? (
                 <div style={{
                   height: '110px',
@@ -381,14 +381,14 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
           ) : <div />}
 
           {/* Right Side: Totals Summary */}
-          <div style={{ 
-            width: '320px', 
-            maxWidth: '100%', 
-            display: 'flex', 
-            flexDirection: 'column', 
+          <div style={{
+            width: '320px',
+            maxWidth: '100%',
+            display: 'flex',
+            flexDirection: 'column',
             gap: '10px'
           }}>
-            
+
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
               <span>Subtotal Charges:</span>
               <span>{formatCurrency(invoice.subtotal)}</span>
@@ -413,12 +413,12 @@ export const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({
 
 
 
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              fontSize: '1.25rem', 
-              fontWeight: 800, 
-              borderTop: '2px solid var(--accent-primary)', 
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              fontSize: '1.25rem',
+              fontWeight: 800,
+              borderTop: '2px solid var(--accent-primary)',
               paddingTop: '12px',
               marginTop: '4px',
               color: 'var(--text-primary)'

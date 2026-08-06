@@ -1,0 +1,14 @@
+{
+  "name": "hospital-billing-monorepo",
+  "version": "1.0.0",
+  "description": "Monorepo for Hospital Billing Portal and API Server",
+  "private": true,
+  "scripts": {
+    "install:client": "npm install --prefix client",
+    "install:server": "npm install --prefix server",
+    "install:all": "npm run install:client && npm run install:server",
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev": "npx concurrently \"npm run dev:client\" \"npm run dev:server\""
+  }
+}
